@@ -28,9 +28,9 @@ public class AbsEntAbstract implements AbsEnt {
     AbsEnt ae;
     name = MyString.ucFirst(name);
     try {
-      ae = (AbsEnt) Class.forName("web.fabric.entities." + name).newInstance();
+      ae = (AbsEnt) Class.forName("com.prim.web.fabric.entities." + name).newInstance();
     } catch (Exception eq) {
-      throw new Exception("Render not found " + "web.fabric.entities." + name + " " + eq.toString());
+      throw new Exception("Render not found " + "com.prim.web.fabric.entities." + name + " " + eq.toString());
     }
     return ae;
   }
