@@ -398,7 +398,7 @@ public final class FabricRender extends RenderAbstract implements Render {
     if (number != null) {
       newft = number.toString();
       if (newft.length() == 11) {
-        char[] nearr = {newft.charAt(0), newft.charAt(1), newft.charAt(2), newft.charAt(3)};
+        char[] nearr = {newft.charAt(1), newft.charAt(2), newft.charAt(3), newft.charAt(4)};
 
         char[] one = {newft.charAt(0)};
         char[] three1 = {newft.charAt(1), newft.charAt(2), newft.charAt(3)};
@@ -408,9 +408,9 @@ public final class FabricRender extends RenderAbstract implements Render {
         String prefix = new String(nearr);
         String res;
         if (prefix.equals(base)) {
-          res = "(" + new String(three1) + ") " + new String(three2) + "-" + new String(two) + "-" + new String(two2);
+          res = new String(three2) + "-" + new String(two) + "-" + new String(two2);
         } else {
-          res = new String(one) + "-" + new String(three1) + "-" + new String(three2) + "-" + new String(two) + "-" + new String(two2);
+          res = new String(one) + " (" + new String(three1) + ") " + new String(three2) + "-" + new String(two) + "-" + new String(two2);
         }
         newft = res;
       }
