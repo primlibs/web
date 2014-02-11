@@ -410,7 +410,7 @@ public final class FabricRender extends RenderAbstract implements Render {
         if (prefix.equals(base)) {
           res = new String(three2) + "-" + new String(two) + "-" + new String(two2);
         } else {
-          res = new String(one) + "-" + new String(three1) + "-" + new String(three2) + "-" + new String(two) + "-" + new String(two2);
+          res = new String(one) + "(" + new String(three1) + ")" + new String(three2) + "-" + new String(two) + "-" + new String(two2);
         }
         newft = res;
       }
