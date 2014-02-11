@@ -396,4 +396,7 @@ public interface Render {
   public AbsEnt href(List<Parameter> params,HrefOptionInterface ho) throws Exception ;
   
   public HrefOptionInterface getHrefOption();
+  
+  public AbsEnt getImgByContent(String content, String width, String height, String style) throws Exception;
+  
 }

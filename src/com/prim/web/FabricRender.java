@@ -1157,4 +1157,10 @@ public final class FabricRender extends RenderAbstract implements Render {
   public HrefOptionInterface getHrefOption() {
     return HrefOption.getInstance();
   }
+  
+  @Override
+  public AbsEnt getImgByContent(String content, String width, String height, String style) throws Exception {
+    return img("data:image/gif;base64," + content, width, height, style);
+  }
+  
 }
