@@ -5,11 +5,7 @@
 package com.prim.web.webclient;
 
 import com.prim.core.UploadedFile;
-import com.prim.core.controller.RightsObject;
-import java.io.File;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
 /**
