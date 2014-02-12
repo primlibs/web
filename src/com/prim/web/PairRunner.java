@@ -5,14 +5,17 @@
 package com.prim.web;
 
 import com.prim.core.AbstractApplication;
+import com.prim.core.UploadedFile;
 import com.prim.core.controller.ActionResult;
 import com.prim.core.controller.ActionResultPrim;
 import com.prim.core.pair.Pair;
 import com.prim.core.pair.Sequence;
 import com.prim.support.MyString;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -28,7 +31,8 @@ public class PairRunner {
   private Map<String, Object> innerSession = new HashMap<String, Object>();
   //переформированый запрос, проверенный на параметры, подается в приложение
   private Map<String, Object> innerRequest = new HashMap<String, Object>();
-  //
+  private List<UploadedFile> fileList = new ArrayList();
+  
   private Map<String, Object> rights = new HashMap<String, Object>();
   private Boolean xmlRenderType = false;
   private Pair pair;
@@ -44,6 +48,7 @@ public class PairRunner {
   private String info = "";
   private Map<String, Object> redirectParams = new HashMap<String, Object>();
   private String timeInfo = "";
+  
 
   public String getTimeInfo() {
     return timeInfo;
@@ -101,8 +106,7 @@ public class PairRunner {
     return stringRedirectParams;
   }
 
-  // конструктор
-  public PairRunner(Map<String, Object> innerSession, Map<String, Object> innerRequest, Pair pair, String doAction, AbstractApplication app) {
+  public PairRunner(Map<String, Object> innerSession, Map<String, Object> innerRequest, Pair pair, String doAction, AbstractApplication app, List<UploadedFile> fileList) {
     this.innerRequest = (innerRequest == null ? new HashMap<String, Object>() : innerRequest);
     this.innerSession = (innerSession == null ? new HashMap<String, Object>() : innerSession);
     this.pair = pair;
@@ -110,6 +114,13 @@ public class PairRunner {
       this.specialAction = doAction;
     }
     this.app = app;
+    if (fileList != null) {
+      this.fileList = fileList;
+    }
+  }
+  
+  public PairRunner(Map<String, Object> innerSession, Map<String, Object> innerRequest, Pair pair, String doAction, AbstractApplication app) {
+    this(innerSession, innerRequest, pair, doAction, app, null);
   }
 
   public Map<String, Object> getInnerSession() {
@@ -143,6 +154,7 @@ public class PairRunner {
     if (seq.getAppObjectName() != null && seq.getAppMethodName() != null && !"".equals(seq.getAppMethodName()) && !"".equals(seq.getAppObjectName())) {
       app.setRequest(innerRequest);
       app.setSession(innerSession);
+      app.setFileList(fileList);
       app.objectName(seq.getAppObjectName());
       app.action(seq.getAppMethodName());
       app.processing();
