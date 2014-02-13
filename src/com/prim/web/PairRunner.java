@@ -119,9 +119,6 @@ public class PairRunner {
     }
   }
   
-  public PairRunner(Map<String, Object> innerSession, Map<String, Object> innerRequest, Pair pair, String doAction, AbstractApplication app) {
-    this(innerSession, innerRequest, pair, doAction, app, null);
-  }
 
   public Map<String, Object> getInnerSession() {
     return innerSession;
