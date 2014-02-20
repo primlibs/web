@@ -9,8 +9,8 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- *
- * @author User
+ * отвечает за прием запроса от Web, сохранение параметров запроса
+ * @author Rice Pavel
  */
 public interface WebClient {
   

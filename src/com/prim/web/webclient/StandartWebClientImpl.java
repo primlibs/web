@@ -1,8 +1,6 @@
 package com.prim.web.webclient;
 
-// класс отвечает за прием запроса от Web, сохранение параметров запроса
 import com.prim.core.UploadedFile;
-import com.prim.core.controller.RightsObject;
 import com.prim.core.warehouse.OptionsKeeper;
 import java.io.File;
 import java.util.ArrayList;
@@ -87,30 +85,6 @@ public class StandartWebClientImpl implements WebClient {
     if (activeAction != null) {
       this.activeAction = activeAction;
     }
-  }
-
-  public void setDefaultPair(RightsObject rights) {
-    String[][] pairs = {{"clients", "showOne"},
-      {"emailArea", "show"},
-      {"serviceArea", "show"},
-      {"bugTracker", "search"}};
-    int object = 0;
-    int action = 1;
-    boolean pairFound = false;
-
-    for (int curLine = 0; curLine < pairs.length && !pairFound; curLine++) {
-      if (rights.methodInRight(pairs[curLine][object], pairs[curLine][action])) {
-        setActiveObjects(pairs[curLine][object]);
-        setActiveAction(pairs[curLine][action]);
-        pairFound = true;
-      }
-    }
-  }
-
-  public void clearReq() {
-    fileList.clear();
-    filearray.clear();
-    innerRequest.clear();
   }
 
   /**
@@ -199,7 +173,7 @@ public class StandartWebClientImpl implements WebClient {
             "specAction") && value != null && !value.toString().equals("")) {
       setDoAction(value.toString().trim());
       doAction = value.toString().trim();
-    } else { //если не одно из условий не выполнилось
+    } else { 
       valueIsSaved = false;
     }
     return valueIsSaved;
