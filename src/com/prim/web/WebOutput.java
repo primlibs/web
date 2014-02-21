@@ -6,6 +6,8 @@ package com.prim.web;
 
 import com.prim.web.fabric.AbsEnt;
 import org.apache.commons.lang3.StringEscapeUtils;
+import org.jsoup.Jsoup;
+import org.jsoup.safety.Whitelist;
 
 /**
  * 
@@ -23,6 +25,10 @@ public class WebOutput {
     } else {
       return "";
     }
+  }
+  
+   public static String cleanHtml(String html) {
+    return Jsoup.clean(html, Whitelist.basicWithImages());
   }
   
 }
