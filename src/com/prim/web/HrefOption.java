@@ -24,7 +24,7 @@ class HrefOption implements HrefOptionInterface{
   private Integer heightImg;
   private RenderTypes renderType;
   private String js = "";
-  private Boolean showWithoutRights;
+  private boolean showWithoutRights = false;
   private String name = "";
   private HrefOption(){
     
