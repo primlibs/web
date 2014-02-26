@@ -471,7 +471,7 @@ public final class FabricRender extends RenderAbstract implements Render {
   }
 
   public AbsEnt th(String inner) throws Exception {
-    return td(null, inner);
+    return th(null, inner);
   }
 
   public AbsEnt th(AbsEnt tr, Object inner) throws Exception {
