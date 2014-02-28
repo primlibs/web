@@ -634,6 +634,14 @@ public final class FabricRender extends RenderAbstract implements Render {
   public Object getReq(String name) {
     return request.get(name);
   }
+  
+  public Map<String, Object> getRequestClone() {
+    Map<String, Object> map = new HashMap();
+    for (String key: request.keySet()) {
+      map.put(key, request.get(key));
+    }
+    return map;
+  }
 
   @Override
   public Object getSess(String name) {

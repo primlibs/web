@@ -160,6 +160,8 @@ public interface Render {
 
   public AbsEnt table(String border, String cellpadding, String sellspacing) throws Exception;
 
+  public Map<String, Object> getRequestClone();
+  
   /**
    * вывод числа в "денежном" формате
    *
