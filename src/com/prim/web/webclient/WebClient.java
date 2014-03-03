@@ -36,6 +36,10 @@ public interface WebClient {
    */
   public String getActiveObjects();
 
+  public void setActiveAction(String activeAction);
+  
+  public void setActiveObjects(String activeObjects);
+  
   /**
    * 
    * @return параметр action из запроса

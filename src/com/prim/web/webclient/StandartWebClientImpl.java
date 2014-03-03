@@ -57,6 +57,8 @@ public class StandartWebClientImpl implements WebClient {
     return activeAction;
   }
 
+  
+  
   @Override
   public String getRenderType() {
     return renderType;
@@ -75,13 +77,13 @@ public class StandartWebClientImpl implements WebClient {
     }
   }
 
-  private void setActiveObjects(String activeObjects) {
+  public void setActiveObjects(String activeObjects) {
     if (activeObjects != null) {
       this.activeObjects = activeObjects;
     }
   }
 
-  private void setActiveAction(String activeAction) {
+  public void setActiveAction(String activeAction) {
     if (activeAction != null) {
       this.activeAction = activeAction;
     }
