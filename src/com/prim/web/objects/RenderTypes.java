@@ -15,4 +15,6 @@ public enum RenderTypes {
   ajax,
   json, 
   doc,
+  classic_json,
+  web
 }

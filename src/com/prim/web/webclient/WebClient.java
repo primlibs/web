@@ -14,9 +14,6 @@ import java.util.List;
  */
 public interface WebClient {
   
-  public static final String WEB="web";
-  public static final String JSON="json";
-  public static final String CLASSIC_JSON = "classic_json";
   
   /**
    * возвращает массив с параметрами, которые пришли в приложение

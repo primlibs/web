@@ -31,7 +31,7 @@ public final class FabricRender extends RenderAbstract implements Render {
   private Map<String, Combo> cashe = new LinkedHashMap<String, Combo>();
   public RenderConstant rc = new RenderConstant();
   private String baseLinkPath = "/";
-
+  
   private FabricRender(Map<String, Combo> cashe, RenderConstant rc) {
     super();
     fabric = new BaseFabric();

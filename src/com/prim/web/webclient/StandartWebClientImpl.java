@@ -2,6 +2,7 @@ package com.prim.web.webclient;
 
 import com.prim.core.UploadedFile;
 import com.prim.core.warehouse.OptionsKeeper;
+import com.prim.web.objects.RenderTypes;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,7 +22,7 @@ public class StandartWebClientImpl implements WebClient {
   //переформированый запрос, проверенный на параметры, подается в приложение
   private HashMap<String, Object> innerRequest = new HashMap<String, Object>();
 
-  private String renderType = WebClient.WEB;
+  private String renderType = RenderTypes.web.toString();
   private String doAction = "default";
   private String activeObjects = "";
   private String activeAction = "";
