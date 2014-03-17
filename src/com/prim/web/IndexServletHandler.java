@@ -33,6 +33,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
 /**
  *
  * обработчик сервлета index
@@ -41,8 +42,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public abstract class IndexServletHandler {
 
-  protected String message = "";
-  protected Map<String, Combo> cashe = new LinkedHashMap<String, Combo>();
+  protected StringBuffer message = new StringBuffer();
   protected String tm;
   private String info;
   protected HttpServletRequest request;
@@ -50,13 +50,16 @@ public abstract class IndexServletHandler {
   protected AbstractApplication app;
   protected WebClient webClient;
 
-  public IndexServletHandler(HttpServletRequest request, HttpServletResponse response, String message, Map<String, Combo> cashe) {
+  public IndexServletHandler(HttpServletRequest request, HttpServletResponse response) {
     this.request = request;
     this.response = response;
-    this.message = message;
-    this.cashe = cashe;
   }
 
+  public StringBuffer getMessage() {
+    return message;
+  }
+  
+  
   /**
    * Processes requests for both HTTP
    * <code>GET</code> and
@@ -71,12 +74,10 @@ public abstract class IndexServletHandler {
           throws ServletException, IOException, Exception {
 
     // инициализация
-    message = "";
     info = "";
     List<pairTime> timeList = new ArrayList<pairTime>();
     request.setCharacterEncoding("UTF-8");
     LinkedHashMap<String, String> hs = new LinkedHashMap<String, String>();
-    cashe = new LinkedHashMap<String, Combo>();
 
     // время
     tm = "";
@@ -456,7 +457,7 @@ public abstract class IndexServletHandler {
               out.write(buffer, 0, readBytes);
             }
           } catch (Exception e) {
-            message += MyString.getStackExeption(e);
+            message.append(MyString.getStackExeption(e));
           }
         }
       } else {
@@ -476,7 +477,6 @@ public abstract class IndexServletHandler {
 
   protected abstract AbstractApplication createApplication() throws Exception;
 }
-
 class pairTime implements Comparable<pairTime> {
 
   Object name = null;
