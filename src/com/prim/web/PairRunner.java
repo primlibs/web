@@ -8,6 +8,7 @@ import com.prim.core.AbstractApplication;
 import com.prim.core.UploadedFile;
 import com.prim.core.controller.ActionResult;
 import com.prim.core.controller.ActionResultPrim;
+import com.prim.core.controller.StatusCodes;
 import com.prim.core.pair.Pair;
 import com.prim.core.pair.Sequence;
 import com.prim.support.MyString;
@@ -165,7 +166,7 @@ public class PairRunner {
       setProcessingTime((new Date().getTime() - timeStart) / 1000.00);
 
       //проверить на status ar
-      if (actionResult.getStatus() == true) {
+      if (actionResult.getStatus().equals(StatusCodes.TRUE)) {
         if (seq.getTrueRedirect() != null & !"".equals(seq.getTrueRedirect())) {
           setRedirect(seq.getTrueRedirect());
           setRedirectParamsInString(seq.getTrueRedirectParams());

@@ -7,6 +7,7 @@ package com.prim.web;
 import com.google.gson.Gson;
 import com.prim.core.AbstractApplication;
 import com.prim.core.controller.ActionResult;
+import com.prim.core.controller.StatusCodes;
 import com.prim.core.db.ExecutorFabric;
 import com.prim.core.db.QueryExecutor;
 import com.prim.core.pair.Pair;
@@ -390,7 +391,7 @@ public abstract class IndexServletHandler {
    * @throws Exception
    */
   protected void redirect(PairRunner pr, Object obj, boolean ajax) throws IOException, Exception {
-    if (pr.getActionResult().getStatus() == false && ajax == false) {
+    if (!pr.getActionResult().getStatus().equals(StatusCodes.TRUE) && ajax == false) {
       request.getSession().setAttribute(obj + "_error", renderErrors(pr.getActionResult(), obj));
     }
 
@@ -428,7 +429,7 @@ public abstract class IndexServletHandler {
     FileInputStream fileIn = null;
     ServletOutputStream out = null;
     try {
-      if (ar.getStatus() == true) {
+      if (ar.getStatus().equals(StatusCodes.TRUE)) {
 
         String newName = ar.get("fileName").toString().replace('\"', '\'').replace(" ", "_");
         response.setContentType("application/octet-stream");

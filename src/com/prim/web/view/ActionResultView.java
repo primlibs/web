@@ -6,6 +6,7 @@ package com.prim.web.view;
 
 import com.google.gson.Gson;
 import com.prim.core.controller.ActionResult;
+import com.prim.core.controller.StatusCodes;
 import com.prim.core.model.DinamicModel;
 import com.prim.support.ToJson;
 import java.util.ArrayList;
@@ -45,7 +46,7 @@ public class ActionResultView implements  ToJson {
   /**
    * результат выполнения действия - успешно или неуспешно
    */
-  private Boolean status = true;
+  private StatusCodes status = StatusCodes.TRUE;
   /**
    * название объекта, который выполнил действие
    */
@@ -93,7 +94,7 @@ public class ActionResultView implements  ToJson {
     return errors;
   }
 
-  public Boolean getStatus() {
+  public StatusCodes getStatus() {
     return status;
   }
 
