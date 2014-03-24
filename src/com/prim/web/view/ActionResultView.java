@@ -46,7 +46,7 @@ public class ActionResultView implements  ToJson {
   /**
    * результат выполнения действия - успешно или неуспешно
    */
-  private StatusCodes status = StatusCodes.TRUE;
+  private Integer status = StatusCodes.TRUE.getId();
   /**
    * название объекта, который выполнил действие
    */
@@ -65,7 +65,7 @@ public class ActionResultView implements  ToJson {
     dictionary = ar.getDictionary();
     messageList = ar.getMessageList();
     errors = ar.getErrors();
-    status = ar.getStatus();
+    status = ar.getStatus().getId();
     objectName = ar.getObjectName();
     objectAlias = ar.getObjectAlias();
     appName = ar.getAppName();
@@ -94,7 +94,7 @@ public class ActionResultView implements  ToJson {
     return errors;
   }
 
-  public StatusCodes getStatus() {
+  public Integer getStatus() {
     return status;
   }
 
