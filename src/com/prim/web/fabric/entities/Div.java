@@ -17,7 +17,7 @@ import com.prim.web.fabric.EnumAttrType;
 class Div extends AbsEntAbstract implements AbsEnt {
 
   public Div() {
-    super(EnumAttrType.id,EnumAttrType.name,EnumAttrType.style,EnumAttrType.height,EnumAttrType.width);
+    super(EnumAttrType.id,EnumAttrType.name,EnumAttrType.style,EnumAttrType.height,EnumAttrType.width, EnumAttrType.title);
   }
 
   @Override
