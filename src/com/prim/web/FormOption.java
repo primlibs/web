@@ -26,6 +26,7 @@ class FormOption implements FormOptionInterface{
   private Integer heightImg;
   private RenderTypes renderType;
   private String js = "";
+  private String buttonCssClass = "";
 
   private FormOption(){
     
@@ -47,7 +48,17 @@ class FormOption implements FormOptionInterface{
     }
   }
 
+  public String getButtonCssClass() {
+    return buttonCssClass;
+  }
 
+  public void setButtonCssClass(String buttonCssClass) {
+    this.buttonCssClass = buttonCssClass;
+  }
+
+
+  
+  
   @Override
   public void setObject(String object) {
     this.object= MyString.getString(object);

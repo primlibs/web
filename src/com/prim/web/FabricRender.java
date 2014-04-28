@@ -970,6 +970,9 @@ public final class FabricRender extends RenderAbstract implements Render {
       if (fo.getImgWidth() != null) {
         formSumbit.setAttribute(EnumAttrType.width, fo.getImgWidth().toString());
       }
+      if (MyString.NotNull(fo.getButtonCssClass())) {
+        formSumbit.setCss(fo.getButtonCssClass());
+      }
       td.addEnt(formSumbit);
       tr.addEnt(td);
     } else {
@@ -1008,6 +1011,9 @@ public final class FabricRender extends RenderAbstract implements Render {
       AbsEnt formSumbit = formSubmit(fo.getTytle(), fo.getImg());
       if (fo.getImgWidth() != null) {
         formSumbit.setAttribute(EnumAttrType.width, fo.getImgWidth().toString());
+      }
+      if (MyString.NotNull(fo.getButtonCssClass())) {
+        formSumbit.setCss(fo.getButtonCssClass());
       }
       td.addEnt(formSumbit);
       tr.addEnt(td);
