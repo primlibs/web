@@ -26,6 +26,8 @@ public interface FormOptionInterface {
 
   public void setButtonCssClass(String buttonCssClass);
 
+  public void addButtonCssClass(String buttonCssClass);
+
   /*
    * устанавливает action
    */

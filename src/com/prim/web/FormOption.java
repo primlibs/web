@@ -56,7 +56,9 @@ class FormOption implements FormOptionInterface{
     this.buttonCssClass = buttonCssClass;
   }
 
-
+public void addButtonCssClass(String buttonCssClass) {
+    this.buttonCssClass += buttonCssClass;
+  }
   
   
   @Override
