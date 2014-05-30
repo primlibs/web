@@ -1125,7 +1125,8 @@ public final class FabricRender extends RenderAbstract implements Render {
 
   @Override
   public AbsEnt href(List<Parameter> params, HrefOptionInterface ho) throws Exception  {
-    AbsEnt ae = null;
+    //AbsEnt ae = null;
+    AbsEnt ae = txt("");
     Boolean rend = true;
     if (ho.isRights() == true) {
       rend = false;      
