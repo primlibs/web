@@ -5,7 +5,10 @@
 package com.prim.web;
 
 import com.prim.support.MyString;
+import com.prim.web.fabric.AbsEnt;
 import com.prim.web.objects.RenderTypes;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -27,6 +30,7 @@ class FormOption implements FormOptionInterface{
   private RenderTypes renderType;
   private String js = "";
   private String buttonCssClass = "";
+  private Map<AbsEnt, String> idMap = new HashMap();
 
   private FormOption(){
     
@@ -40,6 +44,18 @@ class FormOption implements FormOptionInterface{
     fo.setFormToUploadFiles(Boolean.FALSE);
     return fo;
   }
+
+  @Override
+  public Map<AbsEnt, String> getIdMap() {
+    return idMap;
+  }
+
+  @Override
+  public void setIdMap(Map<AbsEnt, String> idMap) {
+    this.idMap = idMap;
+  }
+  
+  
   
   @Override
   public void setHorisontal(Boolean horizontal) {

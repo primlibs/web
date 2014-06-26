@@ -366,7 +366,7 @@ public interface Render {
   public AbsEnt standartFileUploadForm(Boolean horizontal, String object, String action, String specAction, Map<AbsEnt, String> inner, String title, String img) throws Exception;
 
   public AbsEnt rightForm(Map<AbsEnt, String> inner, FormOptionInterface fo) throws Exception;
-  
+    
   public FormOptionInterface getFormOption();
   
   /**

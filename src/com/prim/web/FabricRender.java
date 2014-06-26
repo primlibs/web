@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
 /**
  *
  * @author пользователь
@@ -31,7 +32,7 @@ public final class FabricRender extends RenderAbstract implements Render {
   private Map<String, Combo> cashe = new LinkedHashMap<String, Combo>();
   public RenderConstant rc = new RenderConstant();
   private String baseLinkPath = "/";
-  
+
   private FabricRender(Map<String, Combo> cashe, RenderConstant rc) {
     super();
     fabric = new BaseFabric();
@@ -634,10 +635,10 @@ public final class FabricRender extends RenderAbstract implements Render {
   public Object getReq(String name) {
     return request.get(name);
   }
-  
+
   public Map<String, Object> getRequestClone() {
     Map<String, Object> map = new HashMap();
-    for (String key: request.keySet()) {
+    for (String key : request.keySet()) {
       map.put(key, request.get(key));
     }
     return map;
@@ -919,6 +920,7 @@ public final class FabricRender extends RenderAbstract implements Render {
     return rightForm(horizontal, object, action, specAction, inner, title, img, true, null, true);
   }
 
+  @Override
   public AbsEnt rightForm(Map<AbsEnt, String> inner, FormOptionInterface fo) throws Exception {
     AbsEnt ae = getFabric().get("txt");
     Boolean rend = true;
@@ -950,12 +952,16 @@ public final class FabricRender extends RenderAbstract implements Render {
     ae.addEnt(table);
     AbsEnt tr = getFabric().get("tr");
     table.addEnt(tr);
+    Map<AbsEnt, String> idMap = fo.getIdMap();
     if (inner != null) {
       for (AbsEnt aee : inner.keySet()) {
         if (aee.getAttribute(EnumAttrType.type).equals("hidden")) {
           tr.addEnt(aee);
         } else {
           AbsEnt td1 = getFabric().get("td");
+          if (idMap != null && idMap.get(aee) != null) {
+            td1.setId(idMap.get(aee));
+          }
           td1.setValue(inner.get(aee));
           tr.addEnt(td1);
           AbsEnt td = getFabric().get("td");
@@ -988,12 +994,16 @@ public final class FabricRender extends RenderAbstract implements Render {
     AbsEnt ae = form(fo.isFile());
     AbsEnt table = getFabric().get("table");
     ae.addEnt(table);
+    Map<AbsEnt, String> idMap = fo.getIdMap();
     if (inner != null) {
       for (AbsEnt aee : inner.keySet()) {
         if (aee.getAttribute(EnumAttrType.type).equals("hidden")) {
           table.addEnt(aee);
         } else {
           AbsEnt tr = getFabric().get("tr");
+          if (idMap != null && idMap.get(aee) != null) {
+            tr.setId(idMap.get(aee));
+          }
           table.addEnt(tr);
           AbsEnt td1 = getFabric().get("td");
           td1.setValue(inner.get(aee));
@@ -1042,11 +1052,11 @@ public final class FabricRender extends RenderAbstract implements Render {
    * @param name
    * @return
    * @throws Exception
-   * 
+   *
    */
   @Deprecated
   public final AbsEnt standartAjaxHref(String object, String action, String specAction, Map<String, Object> params, Object name) throws Exception {
-    HrefOptionInterface ho=HrefOption.getInstance();
+    HrefOptionInterface ho = HrefOption.getInstance();
     ho.setObject(object);
     ho.setAction(action);
     ho.setSpecAction(specAction);
@@ -1058,20 +1068,20 @@ public final class FabricRender extends RenderAbstract implements Render {
 
   @Deprecated
   public final AbsEnt href(String object, String action, String specAction, List<Parameter> params, Object name, Boolean validateRights, String ajax, Boolean showTxtWithoutRights) throws Exception {
-    HrefOptionInterface ho=HrefOption.getInstance();
+    HrefOptionInterface ho = HrefOption.getInstance();
     ho.setObject(object);
     ho.setAction(action);
     ho.setSpecAction(specAction);
     ho.setName(name);
     ho.setShowWithoutRights(showTxtWithoutRights);
-    if(validateRights!=null){
-      if(validateRights==true){
+    if (validateRights != null) {
+      if (validateRights == true) {
         ho.setValidateRights();
-      }else{
+      } else {
         ho.setValidateRights();
       }
     }
-    if(MyString.NotNull(ajax)){
+    if (MyString.NotNull(ajax)) {
       ho.setRenderType(RenderTypes.ajax);
       ho.setJsHandler("onClick=\"return submitGet(this,'" + ajax + "')\"");
     }
@@ -1085,20 +1095,20 @@ public final class FabricRender extends RenderAbstract implements Render {
 
   @Deprecated
   public final AbsEnt href(String object, String action, String specAction, Map<String, Object> params, Object name, Boolean validateRights, String ajax, Boolean showTxtWithoutRights) throws Exception {
-    HrefOptionInterface ho=HrefOption.getInstance();
+    HrefOptionInterface ho = HrefOption.getInstance();
     ho.setObject(object);
     ho.setAction(action);
     ho.setSpecAction(specAction);
     ho.setName(name);
     ho.setShowWithoutRights(showTxtWithoutRights);
-    if(validateRights!=null){
-      if(validateRights==true){
+    if (validateRights != null) {
+      if (validateRights == true) {
         ho.setValidateRights();
-      }else{
+      } else {
         ho.setNoValidateRights();
       }
     }
-    if(MyString.NotNull(ajax)){
+    if (MyString.NotNull(ajax)) {
       ho.setRenderType(RenderTypes.ajax);
       ho.setJsHandler("onClick=\"return submitGet(this,'" + ajax + "')\"");
     }
@@ -1119,17 +1129,17 @@ public final class FabricRender extends RenderAbstract implements Render {
   }
 
   @Override
-  public AbsEnt href(Map<String, Object> params, HrefOptionInterface ho)  throws Exception {
+  public AbsEnt href(Map<String, Object> params, HrefOptionInterface ho) throws Exception {
     return href(Parameter.getArray(params), ho);
   }
 
   @Override
-  public AbsEnt href(List<Parameter> params, HrefOptionInterface ho) throws Exception  {
+  public AbsEnt href(List<Parameter> params, HrefOptionInterface ho) throws Exception {
     //AbsEnt ae = null;
     AbsEnt ae = txt("");
     Boolean rend = true;
     if (ho.isRights() == true) {
-      rend = false;      
+      rend = false;
       if (rightsObject.methodInRight(ho.getObject(), ho.getAction()) == true) {
         rend = true;
       }
@@ -1140,10 +1150,10 @@ public final class FabricRender extends RenderAbstract implements Render {
       }
       ae = fabric.get("href");
       String href = "?";
-      if (ho.getAction()!= null) {
+      if (ho.getAction() != null) {
         href += "&action=" + fabric.escapeHtml(ho.getAction());
       }
-      if (ho.getObject()!= null) {
+      if (ho.getObject() != null) {
         href += "&object=" + fabric.escapeHtml(ho.getObject());
       }
       if (ho.getSpecAction() != null) {
@@ -1152,7 +1162,7 @@ public final class FabricRender extends RenderAbstract implements Render {
       for (Parameter param : params) {
         href += "&" + param.getName() + "=" + fabric.escapeHtml(param.getValue());
       }
-      if (ho.getRenderType()==RenderTypes.ajax) {
+      if (ho.getRenderType() == RenderTypes.ajax) {
         href += "&renderType=ajax";
         ae.setJs(ho.getJshandler());
       }
@@ -1172,10 +1182,9 @@ public final class FabricRender extends RenderAbstract implements Render {
   public HrefOptionInterface getHrefOption() {
     return HrefOption.getInstance();
   }
-  
+
   @Override
   public AbsEnt getImgByContent(String content, String width, String height, String style) throws Exception {
     return img("data:image/gif;base64," + content, width, height, style);
   }
-  
 }
