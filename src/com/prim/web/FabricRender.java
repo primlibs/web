@@ -339,6 +339,34 @@ public final class FabricRender extends RenderAbstract implements Render {
     }
   }
 
+  @Override
+  public AbsEnt combo(String service, String method, String methodForDefault, Object value, String name)
+          throws Exception {
+    return combo(service, method, service, methodForDefault, value, name);
+  }
+
+  @Override
+  public AbsEnt combo(String service, String method, String serviceForDefault, String methodForDefault, Object value, String name)
+          throws Exception {
+    Combo cb = getCombo(service, method);
+    Map<String, Object> comboMap = cb.getComboList();
+    Map<String, Object> map = new LinkedHashMap();
+    if (value != null) {
+      String valueString = value.toString();
+      if (!comboMap.keySet().contains(valueString)) {
+        // получить значение по умолчанию
+        // поместить его первым номером в список
+        String valueName = comboLikeString(serviceForDefault, methodForDefault, value);
+        map.put(valueString, valueName);
+        map.putAll(comboMap);
+      }
+    }
+    if (map.isEmpty()) {
+      map.putAll(comboMap);
+    }
+    return combo(map, value, name);
+  }
+
   public AbsEnt combo(String service, String method, Object value, String name) throws Exception {
     Combo cb = getCombo(service, method);
     return combo(cb.getComboList(), value, name);
@@ -540,8 +568,8 @@ public final class FabricRender extends RenderAbstract implements Render {
 
   /**
    * \
-   * Создает форму для загрузки файло и кнопку для добавления подобных, связано
-   * со скриптом в index.java
+   * Создает форму для загрузки файло и кнопку для добавления подобных, связано со скриптом в
+   * index.java
    *
    * @return html код в виде сущности (форма для загрузки(
    * @throws Exception
@@ -617,8 +645,7 @@ public final class FabricRender extends RenderAbstract implements Render {
   }
 
   /**
-   * регистрирует Exception, то есть записывает в renderResult полный стек
-   * объекта Exception
+   * регистрирует Exception, то есть записывает в renderResult полный стек объекта Exception
    *
    * @param exc объект Exception
    */

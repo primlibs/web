@@ -35,14 +35,17 @@ public interface Render {
   /*
    * стандартный метод 
    */
+
   public void renderAddEntityForm();
   /*
    * стандартный метод 
    */
+
   public void renderChangeEntityForm();
   /*
    * стандартный метод 
    */
+
   public void renderEntityList();
 
   public String getTimeInfo();
@@ -64,7 +67,7 @@ public interface Render {
   public RightsObject getRightsObject();
 
   public void setApplication(AbstractApplication app) throws Exception;
-  
+
   public AbsEnt img(String img, String width, String height, String style) throws Exception;
 
   /**
@@ -154,14 +157,14 @@ public interface Render {
   /**
    * форматирует строковую запись номера в человекопонятную, базу убирает
    */
-  public String phoneNumberFt(Object number,String base);
+  public String phoneNumberFt(Object number, String base);
 
   public AbsEnt table(String id, String style, String border, String cellpadding, String sellspacing, String javaScript) throws Exception;
 
   public AbsEnt table(String border, String cellpadding, String sellspacing) throws Exception;
 
   public Map<String, Object> getRequestClone();
-  
+
   /**
    * вывод числа в "денежном" формате
    *
@@ -194,8 +197,8 @@ public interface Render {
 
   /**
    * \
-   * Создает форму для загрузки файло и кнопку для добавления подобных, связано
-   * со скриптом в index.java
+   * Создает форму для загрузки файло и кнопку для добавления подобных, связано со скриптом в
+   * index.java
    *
    * @return html код в виде сущности (форма для загрузки(
    * @throws Exception
@@ -219,8 +222,7 @@ public interface Render {
   public AbsEnt addStyle(AbsEnt ae, String style);
 
   /**
-   * регистрирует Exception, то есть записывает в renderResult полный стек
-   * объекта Exception
+   * регистрирует Exception, то есть записывает в renderResult полный стек объекта Exception
    *
    * @param exc объект Exception
    */
@@ -266,8 +268,8 @@ public interface Render {
   public AbsEnt multipleCombo(String service, String method, Object value, String name, Integer size) throws Exception;
 
   /**
-   * Устанавливает базовое значение для ссылок в рендере к примеру для форм
-   * изменяя значение action , для ссылок изменяет href до параметров
+   * Устанавливает базовое значение для ссылок в рендере к примеру для форм изменяя значение action
+   * , для ссылок изменяет href до параметров
    */
   public Boolean setBaseLinkPath(String path);
 
@@ -366,9 +368,9 @@ public interface Render {
   public AbsEnt standartFileUploadForm(Boolean horizontal, String object, String action, String specAction, Map<AbsEnt, String> inner, String title, String img) throws Exception;
 
   public AbsEnt rightForm(Map<AbsEnt, String> inner, FormOptionInterface fo) throws Exception;
-    
+
   public FormOptionInterface getFormOption();
-  
+
   /**
    * возвращает стандартную Ajax-ссылку
    *
@@ -382,23 +384,58 @@ public interface Render {
    */
   @Deprecated
   public AbsEnt standartAjaxHref(String object, String action, String specAction, Map<String, Object> params, Object name) throws Exception;
+
   @Deprecated
   public AbsEnt href(String object, String action, String specAction, Map<String, Object> params, Object name, Boolean validateRights, String ajax, Boolean showTxtWithoutRights) throws Exception;
+
   @Deprecated
   public AbsEnt href(String object, String action, String SpecAction, Map<String, Object> params, Object name, Boolean validateRights) throws Exception;
+
   @Deprecated
   public AbsEnt href(String object, String action, String SpecAction, Map<String, Object> params, Object name) throws Exception;
+
   @Deprecated
   public AbsEnt href(String object, String action, String specAction, List<Parameter> params, Object name, Boolean validateRights, String ajax, Boolean showTxtWithoutRights) throws Exception;
+
   @Deprecated
   public AbsEnt href(String object, String action, String SpecAction, List<Parameter> params, Object name) throws Exception;
-    
-  public AbsEnt href(Map<String, Object> params,HrefOptionInterface ho) throws Exception ;
-  
-  public AbsEnt href(List<Parameter> params,HrefOptionInterface ho) throws Exception ;
-  
+
+  public AbsEnt href(Map<String, Object> params, HrefOptionInterface ho) throws Exception;
+
+  public AbsEnt href(List<Parameter> params, HrefOptionInterface ho) throws Exception;
+
   public HrefOptionInterface getHrefOption();
-  
+
   public AbsEnt getImgByContent(String content, String width, String height, String style) throws Exception;
-  
+
+  /**
+   * Возвращает объект, который представляет собой селект (раскрывающийся список). Если в полученном
+   * списке нет значения по умолчанию, то значение по умолчанию добавляется в начало списка. Для
+   * получения названия значения по умолчанию используется отдельный сервис.
+   *
+   * @param service название сервиса для получения данных
+   * @param method название метода для получения данных
+   * @param serviceForDefault название сервиса для получения имени значения по умолчанию
+   * @param methodForDefault название метода для получения имени значения по умолчанию
+   * @param value значение по умолчанию
+   * @param name атрибут name
+   * @return Объект, который представляет собой раскрывающийся список.
+   * @throws Exception
+   */
+  public AbsEnt combo(String service, String method, String serviceForDefault, String methodForDefault, Object value, String name) throws Exception;
+
+   /**
+   * Возвращает объект, который представляет собой селект (раскрывающийся список). Если в полученном
+   * списке нет значения по умолчанию, то значение по умолчанию добавляется в начало списка. Для
+   * получения названия значения по умолчанию используется отдельный сервис.
+   *
+   * @param service название сервиса для получения данных
+   * @param method название метода для получения данных
+   * @param methodForDefault название метода для получения имени значения по умолчанию
+   * @param value значение по умолчанию
+   * @param name атрибут name
+   * @return Объект, который представляет собой раскрывающийся список.
+   * @throws Exception
+   */
+  public AbsEnt combo(String service, String method, String methodForDefault, Object value, String name) throws Exception;
 }
