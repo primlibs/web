@@ -76,6 +76,19 @@ public interface FormOptionInterface {
    */
   public void setFormToUploadFiles(Boolean file);
 
+  /**
+   * расположение кнопки в начале формы
+   * @param place 
+   */
+  public void setPlaceButtonAtBegin(Boolean place);
+  
+  /**
+   * расположение кнопки в начале формы
+   * @return 
+   */
+   public Boolean isPlaceButtonAtBegin();
+
+  
   /*
    * Устанавливает название кнопки
    */

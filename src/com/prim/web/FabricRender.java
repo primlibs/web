@@ -947,6 +947,13 @@ public final class FabricRender extends RenderAbstract implements Render {
     return rightForm(horizontal, object, action, specAction, inner, title, img, true, null, true);
   }
 
+  /**
+   * 
+   * @param inner поля формы
+   * @param fo объект с настройками формы
+   * @return форму
+   * @throws Exception
+   */
   @Override
   public AbsEnt rightForm(Map<AbsEnt, String> inner, FormOptionInterface fo) throws Exception {
     AbsEnt ae = getFabric().get("txt");
@@ -980,6 +987,25 @@ public final class FabricRender extends RenderAbstract implements Render {
     AbsEnt tr = getFabric().get("tr");
     table.addEnt(tr);
     Map<AbsEnt, String> idMap = fo.getIdMap();
+    
+     AbsEnt buttonTd = getFabric().get("td");
+    if (!MyString.NotNull(fo.getВuttonName())) {
+      AbsEnt formSumbit = formSubmit(fo.getTytle(), fo.getImg());
+      if (fo.getImgWidth() != null) {
+        formSumbit.setAttribute(EnumAttrType.width, fo.getImgWidth().toString());
+      }
+      if (MyString.NotNull(fo.getButtonCssClass())) {
+        formSumbit.setCss(fo.getButtonCssClass());
+      }
+      buttonTd.addEnt(formSumbit);
+    } else {
+      buttonTd.addEnt(getFabric().get("button").setValue(fo.getВuttonName()));
+    }
+    
+    if (fo.isPlaceButtonAtBegin()) {
+      tr.addEnt(buttonTd);
+    }
+    
     if (inner != null) {
       for (AbsEnt aee : inner.keySet()) {
         if (aee.getAttribute(EnumAttrType.type).equals("hidden")) {
@@ -997,22 +1023,11 @@ public final class FabricRender extends RenderAbstract implements Render {
         }
       }
     }
-    if (!MyString.NotNull(fo.getВuttonName())) {
-      AbsEnt td = getFabric().get("td");
-      AbsEnt formSumbit = formSubmit(fo.getTytle(), fo.getImg());
-      if (fo.getImgWidth() != null) {
-        formSumbit.setAttribute(EnumAttrType.width, fo.getImgWidth().toString());
-      }
-      if (MyString.NotNull(fo.getButtonCssClass())) {
-        formSumbit.setCss(fo.getButtonCssClass());
-      }
-      td.addEnt(formSumbit);
-      tr.addEnt(td);
-    } else {
-      AbsEnt td = getFabric().get("td");
-      td.addEnt(getFabric().get("button").setValue(fo.getВuttonName()));
-      tr.addEnt(td);
+    
+    if (!fo.isPlaceButtonAtBegin()) {
+      tr.addEnt(buttonTd);
     }
+   
     ae.addEnt(hiddenInput("submit", "submit"));
     return ae;
   }

@@ -31,6 +31,7 @@ class FormOption implements FormOptionInterface{
   private String js = "";
   private String buttonCssClass = "";
   private Map<AbsEnt, String> idMap = new HashMap();
+  private Boolean placeButtonAtBegin = false;
 
   private FormOption(){
     
@@ -54,8 +55,14 @@ class FormOption implements FormOptionInterface{
   public void setIdMap(Map<AbsEnt, String> idMap) {
     this.idMap = idMap;
   }
-  
-  
+
+  public Boolean isPlaceButtonAtBegin() {
+    return placeButtonAtBegin;
+  }
+
+  public void setPlaceButtonAtBegin(Boolean placeButtonAtBegin) {
+    this.placeButtonAtBegin = placeButtonAtBegin;
+  }
   
   @Override
   public void setHorisontal(Boolean horizontal) {
