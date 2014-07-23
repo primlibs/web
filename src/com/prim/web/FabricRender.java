@@ -1207,6 +1207,8 @@ public final class FabricRender extends RenderAbstract implements Render {
       if (ho.getRenderType() == RenderTypes.ajax) {
         href += "&renderType=ajax";
         ae.setJs(ho.getJshandler());
+      } else if (ho.getRenderType() == RenderTypes.doc) {
+        href += "&renderType=doc";
       }
       if (ho.getTytle() != null && !ho.getTytle().isEmpty()) {
         ae.setAttribute(EnumAttrType.title, ho.getTytle());
