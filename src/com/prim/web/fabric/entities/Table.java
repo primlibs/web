@@ -32,13 +32,13 @@ public class Table extends AbsEntAbstract implements AbsEnt {
     if(!data.entities.isEmpty()){
       for(AbsEnt ae:data.entities){
         if(MyString.NotNull(ae.getAttribute(EnumAttrType.head))){
-          head="<thead>"+ae.render()+"</thead>";
+          head+=ae.render();
         }else{
           body+=ae.render();
         }
       }
     }
-    result +=head;
+    result +="<thead>"+head+"</thead>";
     result +="<tbody>"+body+"</tbody>";
     result += "</table>";
 
