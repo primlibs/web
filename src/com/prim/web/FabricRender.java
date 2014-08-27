@@ -367,6 +367,28 @@ public final class FabricRender extends RenderAbstract implements Render {
     return combo(map, value, name);
   }
 
+  @Override
+  public AbsEnt combo(String service, String method, String serviceForDefault, String methodForDefault, Object value, String name, boolean mandatory)
+          throws Exception {
+    Combo cb = getCombo(service, method);
+    Map<String, Object> comboMap = cb.getComboList();
+    Map<String, Object> map = new LinkedHashMap();
+    if (!mandatory) {
+      map.put("0", "не выбрано");
+    }
+    if (value != null) {
+      String valueString = value.toString();
+      if (!comboMap.keySet().contains(valueString)) {
+        // получить значение по умолчанию
+        // поместить его первым номером в список
+        String valueName = comboLikeString(serviceForDefault, methodForDefault, value);
+        map.put(valueString, valueName);
+      }
+    }
+    map.putAll(comboMap);
+    return combo(map, value, name);
+  }
+
   public AbsEnt combo(String service, String method, Object value, String name) throws Exception {
     Combo cb = getCombo(service, method);
     return combo(cb.getComboList(), value, name);
@@ -568,8 +590,7 @@ public final class FabricRender extends RenderAbstract implements Render {
 
   /**
    * \
-   * Создает форму для загрузки файло и кнопку для добавления подобных, связано со скриптом в
-   * index.java
+   * Создает форму для загрузки файло и кнопку для добавления подобных, связано со скриптом в index.java
    *
    * @return html код в виде сущности (форма для загрузки(
    * @throws Exception
@@ -948,7 +969,7 @@ public final class FabricRender extends RenderAbstract implements Render {
   }
 
   /**
-   * 
+   *
    * @param inner поля формы
    * @param fo объект с настройками формы
    * @return форму
@@ -987,8 +1008,8 @@ public final class FabricRender extends RenderAbstract implements Render {
     AbsEnt tr = getFabric().get("tr");
     table.addEnt(tr);
     Map<AbsEnt, String> idMap = fo.getIdMap();
-    
-     AbsEnt buttonTd = getFabric().get("td");
+
+    AbsEnt buttonTd = getFabric().get("td");
     if (!MyString.NotNull(fo.getВuttonName())) {
       AbsEnt formSumbit = formSubmit(fo.getTytle(), fo.getImg());
       if (fo.getImgWidth() != null) {
@@ -1001,11 +1022,11 @@ public final class FabricRender extends RenderAbstract implements Render {
     } else {
       buttonTd.addEnt(getFabric().get("button").setValue(fo.getВuttonName()));
     }
-    
+
     if (fo.isPlaceButtonAtBegin()) {
       tr.addEnt(buttonTd);
     }
-    
+
     if (inner != null) {
       for (AbsEnt aee : inner.keySet()) {
         if (aee.getAttribute(EnumAttrType.type).equals("hidden")) {
@@ -1023,11 +1044,11 @@ public final class FabricRender extends RenderAbstract implements Render {
         }
       }
     }
-    
+
     if (!fo.isPlaceButtonAtBegin()) {
       tr.addEnt(buttonTd);
     }
-   
+
     ae.addEnt(hiddenInput("submit", "submit"));
     return ae;
   }

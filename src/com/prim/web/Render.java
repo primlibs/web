@@ -425,6 +425,9 @@ public interface Render {
    */
   public AbsEnt combo(String service, String method, String serviceForDefault, String methodForDefault, Object value, String name) throws Exception;
 
+  public AbsEnt combo(String service, String method, String serviceForDefault, String methodForDefault, Object value, String name, boolean mandatory)
+          throws Exception;
+  
    /**
    * Возвращает объект, который представляет собой селект (раскрывающийся список). Если в полученном
    * списке нет значения по умолчанию, то значение по умолчанию добавляется в начало списка. Для
