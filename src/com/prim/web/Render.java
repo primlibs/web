@@ -29,23 +29,21 @@ public interface Render {
   public String getBaseLinkPath();
 
   /*
-   * стандартный метод 
+   * стандартный метод просмотра одной сущности
    */
   public void renderOneEntity();
+  
   /*
-   * стандартный метод 
+   * стандартный метод - показать форму добавления
    */
-
   public void renderAddEntityForm();
   /*
-   * стандартный метод 
+   * стандартный метод - показать форму изменения
    */
-
   public void renderChangeEntityForm();
   /*
-   * стандартный метод 
+   * стандартный метод - показать список
    */
-
   public void renderEntityList();
 
   public String getTimeInfo();
@@ -89,6 +87,14 @@ public interface Render {
    */
   public AbsEnt form(Boolean formToUploadFiles) throws Exception;
 
+  /**
+   * возвращает объект, включающий в себя html, который не экранируется.
+   * @param html 
+   * @return
+   * @throws Exception 
+   */
+  public AbsEnt notExcapeHtml(String html) throws Exception;
+  
   public AbsEnt textInput(String name, Object value, String placeholder) throws Exception;
 
   public AbsEnt dateInput(String name, Object value, String placeholder) throws Exception;
@@ -156,6 +162,9 @@ public interface Render {
 
   /**
    * форматирует строковую запись номера в человекопонятную, базу убирает
+   * @param number 
+   * @param base
+   * @return 
    */
   public String phoneNumberFt(Object number, String base);
 
@@ -196,7 +205,7 @@ public interface Render {
   public AbsEnt span(String style, String css, Object value) throws Exception;
 
   /**
-   * \
+   * 
    * Создает форму для загрузки файло и кнопку для добавления подобных, связано со скриптом в
    * index.java
    *

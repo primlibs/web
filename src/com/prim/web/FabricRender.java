@@ -1252,4 +1252,11 @@ public final class FabricRender extends RenderAbstract implements Render {
   public AbsEnt getImgByContent(String content, String width, String height, String style) throws Exception {
     return img("data:image/gif;base64," + content, width, height, style);
   }
+
+  @Override
+  public AbsEnt notExcapeHtml(String html) throws Exception {
+    AbsEnt ent = getFabric().get("NotEscapeText");
+    ent.setValue(html);
+    return ent;
+  }
 }
