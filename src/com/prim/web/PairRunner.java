@@ -11,14 +11,18 @@ import com.prim.core.controller.ActionResultPrim;
 import com.prim.core.controller.StatusCodes;
 import com.prim.core.pair.Pair;
 import com.prim.core.pair.Sequence;
+import com.prim.core.pair.SequenceObject;
+import com.prim.core.warehouse.OptionsKeeper;
+import com.prim.core.warehouse.WarehouseSingleton;
 import com.prim.support.MyString;
+import com.prim.web.webcontroller.WebController;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 
 /**
  *
@@ -33,7 +37,7 @@ public class PairRunner {
   //переформированый запрос, проверенный на параметры, подается в приложение
   private Map<String, Object> innerRequest = new HashMap<String, Object>();
   private List<UploadedFile> fileList = new ArrayList();
-  
+
   private Map<String, Object> rights = new HashMap<String, Object>();
   private Boolean xmlRenderType = false;
   private Pair pair;
@@ -49,7 +53,6 @@ public class PairRunner {
   private String info = "";
   private Map<String, Object> redirectParams = new HashMap<String, Object>();
   private String timeInfo = "";
-  
 
   public String getTimeInfo() {
     return timeInfo;
@@ -80,7 +83,11 @@ public class PairRunner {
   }
 
   public Sequence getSequence() {
-    return sequence.clone();
+    if (sequence != null) {
+      return sequence.clone();
+    } else {
+      return SequenceObject.getInstance("", "", "", "", "", "", "", "", "");
+    }
   }
 
   public String getSpecialAction() {
@@ -119,7 +126,6 @@ public class PairRunner {
       this.fileList = fileList;
     }
   }
-  
 
   public Map<String, Object> getInnerSession() {
     return innerSession;
@@ -132,76 +138,218 @@ public class PairRunner {
   /*
    *  Запускает приложение возвращает строку представление
    */
+  /*
+   public String run() throws Exception {
+   Long timeStart = new Date().getTime();
+   Long timeProc = null;
+   String str = "";
+   //вытащить секвенцию
+   if (pair == null) {
+   throw new Exception("Not find pair");
+   }
+   Sequence seq = pair.getSequence(specialAction);
+   if (seq == null) {
+   seq = pair.getSequence("default");
+   if (seq == null) {
+   throw new Exception("Unexpected sequention");
+   }
+   }
+   sequence = seq;
+   //отработать сервис
+   if (seq.getAppObjectName() != null && seq.getAppMethodName() != null && !"".equals(seq.getAppMethodName()) && !"".equals(seq.getAppObjectName())) {
+   app.setRequest(innerRequest);
+   app.setSession(innerSession);
+   app.setFileList(fileList);
+   app.objectName(seq.getAppObjectName());
+   app.action(seq.getAppMethodName());
+   app.processing();
+   actionResult = app.getActionResult();
+   //реформировать сессию
+   innerSession = app.getSession();
+   info = app.getInfo();
+   redirectParams = app.getRedirectParams();
+
+   timeProc = new Date().getTime();
+   setProcessingTime((new Date().getTime() - timeStart) / 1000.00);
+
+   //проверить на status ar
+   if (actionResult.getStatus().equals(StatusCodes.TRUE)) {
+   if (seq.getTrueRedirect() != null & !"".equals(seq.getTrueRedirect())) {
+   setRedirect(seq.getTrueRedirect());
+   setRedirectParamsInString(seq.getTrueRedirectParams());
+   } else {
+   //отработать рендер
+   str = render(seq, true);
+   }
+   } else {
+   if (seq.getFalseRedirect() != null && !"".equals(seq.getFalseRedirect())) {
+   //отработать редирект
+   setRedirect(seq.getFalseRedirect());
+   setRedirectParamsInString(seq.getFalseRedirectParams());
+   } else {
+   //отработать рендер
+   str = render(seq, false);
+   }
+   }
+   } else {
+   actionResult = ActionResultPrim.getInstance();
+   timeProc = new Date().getTime();
+   if (seq.getTrueRender() != null) {
+   str = render(seq, true);
+   } else if (seq.getFalseRender() != null) {
+   str = render(seq, false);
+   }
+   }
+
+   setRenderTime((new Date().getTime() - timeProc) / 1000.00);
+
+   //вернуть строку   
+   return str;
+   }
+   */
   public String run() throws Exception {
-    Long timeStart = new Date().getTime();
-    Long timeProc = null;
-    String str = "";
-    //вытащить секвенцию
-    if (pair == null) {
-      throw new Exception("Not find pair");
-    }
-    Sequence seq = pair.getSequence(specialAction);
-    if (seq == null) {
-      seq = pair.getSequence("default");
-      if (seq == null) {
-        throw new Exception("Unexpected sequention");
+
+    if (!pair.isByWebController()) {
+
+      Long timeStart = new Date().getTime();
+      Long timeProc = null;
+      String str = "";
+      //вытащить секвенцию
+      if (pair == null) {
+        throw new Exception("Not find pair");
       }
-    }
-    sequence = seq;
-    //отработать сервис
-    if (seq.getAppObjectName() != null && seq.getAppMethodName() != null && !"".equals(seq.getAppMethodName()) && !"".equals(seq.getAppObjectName())) {
-      app.setRequest(innerRequest);
-      app.setSession(innerSession);
-      app.setFileList(fileList);
-      app.objectName(seq.getAppObjectName());
-      app.action(seq.getAppMethodName());
-      app.processing();
-      actionResult = app.getActionResult();
-      //реформировать сессию
-      innerSession = app.getSession();
-      info = app.getInfo();
-      redirectParams = app.getRedirectParams();
+      Sequence seq = pair.getSequence(specialAction);
+      if (seq == null) {
+        seq = pair.getSequence("default");
+        if (seq == null) {
+          throw new Exception("Unexpected sequention");
+        }
+      }
+      sequence = seq;
+      //отработать сервис
+      if (seq.getAppObjectName() != null && seq.getAppMethodName() != null && !"".equals(seq.getAppMethodName()) && !"".equals(seq.getAppObjectName())) {
+        app.setRequest(innerRequest);
+        app.setSession(innerSession);
+        app.setFileList(fileList);
+        app.objectName(seq.getAppObjectName());
+        app.action(seq.getAppMethodName());
+        app.processing();
+        actionResult = app.getActionResult();
+        //реформировать сессию
+        innerSession = app.getSession();
+        info = app.getInfo();
+        redirectParams = app.getRedirectParams();
 
-      timeProc = new Date().getTime();
-      setProcessingTime((new Date().getTime() - timeStart) / 1000.00);
+        timeProc = new Date().getTime();
+        setProcessingTime((new Date().getTime() - timeStart) / 1000.00);
 
-      //проверить на status ar
-      if (actionResult.getStatus().equals(StatusCodes.TRUE)) {
-        if (seq.getTrueRedirect() != null & !"".equals(seq.getTrueRedirect())) {
-          setRedirect(seq.getTrueRedirect());
-          setRedirectParamsInString(seq.getTrueRedirectParams());
+        //проверить на status ar
+        if (actionResult.getStatus().equals(StatusCodes.TRUE)) {
+          if (seq.getTrueRedirect() != null & !"".equals(seq.getTrueRedirect())) {
+            setRedirect(seq.getTrueRedirect());
+            setRedirectParamsInString(seq.getTrueRedirectParams());
+          } else {
+            //отработать рендер
+            str = render(seq, true);
+          }
         } else {
-          //отработать рендер
-          str = render(seq, true);
+          if (seq.getFalseRedirect() != null && !"".equals(seq.getFalseRedirect())) {
+            //отработать редирект
+            setRedirect(seq.getFalseRedirect());
+            setRedirectParamsInString(seq.getFalseRedirectParams());
+          } else {
+            //отработать рендер
+            str = render(seq, false);
+          }
         }
       } else {
-        if (seq.getFalseRedirect() != null && !"".equals(seq.getFalseRedirect())) {
-          //отработать редирект
-          setRedirect(seq.getFalseRedirect());
-          setRedirectParamsInString(seq.getFalseRedirectParams());
-        } else {
-          //отработать рендер
+        actionResult = ActionResultPrim.getInstance();
+        timeProc = new Date().getTime();
+        if (seq.getTrueRender() != null) {
+          str = render(seq, true);
+        } else if (seq.getFalseRender() != null) {
           str = render(seq, false);
         }
       }
+
+      setRenderTime((new Date().getTime() - timeProc) / 1000.00);
+
+      //вернуть строку   
+      return str;
     } else {
-      actionResult = ActionResultPrim.getInstance();
-      timeProc = new Date().getTime();
-      if (seq.getTrueRender() != null) {
-        str = render(seq, true);
-      } else if (seq.getFalseRender() != null) {
-        str = render(seq, false);
-      }
+      return runbyWebController();
     }
+  }
 
-    setRenderTime((new Date().getTime() - timeProc) / 1000.00);
-
-    //вернуть строку   
+  /**
+   * экспериментальный метод
+   */
+  private String runbyWebController() {
+    String str = "";
+    try {
+      // создать контроллер
+      OptionsKeeper opt = WarehouseSingleton.getInstance().getKeeper(app).getOptionKeeper();
+      String controllerName = pair.getControllerName();
+      if (controllerName != null) {
+        String[] s = controllerName.split(":");
+        if (s.length == 2) {
+          String className = s[0];
+          String methodName = s[1];
+          String fullClassName = "controllers." + className;
+          if (classExists(fullClassName)) {
+            Class cl = Class.forName(fullClassName);
+            Constructor constructor = cl.getConstructor(Map.class, Map.class, List.class, AbstractApplication.class);
+            Map<String, Object> newRequest = new HashMap();            
+            String spec = specialAction.trim();
+            if (spec.equals("default")) {
+              spec = "";
+            }
+            newRequest.put("specAction", spec);
+            newRequest.putAll(innerRequest);
+            WebController cnt = (WebController) constructor.newInstance(newRequest, innerSession, fileList, app);
+            // выполнить 
+            Method method = cnt.getClass().getMethod(methodName);
+            method.invoke(cnt);
+            // присвоить параметры
+            actionResult = cnt.getActionResult();
+            if (cnt.makeRedirect()) {
+              setRedirect(cnt.getRedirect());
+              stringRedirectParams = cnt.getRedirectParamsToString();
+            } else {
+              str = cnt.getHtml();
+            }
+          } else {
+            str += "Controller not found";
+          }
+        } else {
+          str += "Controller not found";
+        }
+      } else {
+        str += "controllerName is null";
+      }
+    } catch (Exception e) {
+      str = MyString.getStackExeption(e);
+    }
     return str;
   }
 
+  public static Boolean classExists(String className) {
+    Boolean res = false;
+    try {
+      Object o = Class.forName(className);
+      res = true;
+    } catch (ClassNotFoundException e) {
+      res = false;
+    }
+    return res;
+  }
+
   public ActionResult getActionResult() {
-    return actionResult;
+    if (actionResult != null) {
+      return actionResult;
+    } else {
+      return ActionResultPrim.getInstance();
+    }
   }
 
   private String render(Sequence seq, boolean status) throws Exception {
