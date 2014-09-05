@@ -295,7 +295,7 @@ public class PairRunner {
         if (s.length == 2) {
           String className = s[0];
           String methodName = s[1];
-          String fullClassName = "controllers." + className;
+          String fullClassName = app.getControllerClassPath() + "." + className;
           if (classExists(fullClassName)) {
             Class cl = Class.forName(fullClassName);
             Constructor constructor = cl.getConstructor(Map.class, Map.class, List.class, AbstractApplication.class);
