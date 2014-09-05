@@ -7,6 +7,7 @@ package com.prim.web.webcontroller;
 
 import com.prim.core.UploadedFile;
 import com.prim.core.controller.ActionResult;
+import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -19,7 +20,7 @@ import java.util.Set;
 public interface WebController {
 
     public static String[] internalMethods = {"getRequest", "getSession", "getFileList", "getHtml", "makeRedirect", "getRedirectParamsToString"
-    , "getRedirect", "getActionResult", "wait", "toString", "equals", "getClass", "hashCode", "notify", "notifyAll"};
+    , "getRedirect", "getActionResult", "wait", "toString", "equals", "getClass", "hashCode", "notify", "notifyAll", "startTransaction", "endTransaction"};
     
     
   
@@ -37,6 +38,9 @@ public interface WebController {
 
   public String getRedirect();
   
-  public ActionResult getActionResult();
+  
+  public  void startTransaction() throws SQLException ;
+  
+  public void endTransaction(boolean status) throws SQLException;
   
 }

@@ -47,8 +47,9 @@ public class StandartWebController extends AbstractWebController {
     this.primaryName = primaryName;
   }
 
-  public void add() {
+  public ActionResult add() {
     String specAction = MyString.getString(request.get("specAction"));
+    ActionResult result = null;
     if (specAction.equals(defaultSpecAction)) {
       render.setRequest(request);
       render.renderAddEntityForm();
@@ -56,20 +57,21 @@ public class StandartWebController extends AbstractWebController {
     } else if (specAction.equals("add")) {
       service.setRequest(request);
       service.saveModel();
-      ActionResult result = service.getActionResult();
-      setActionResult(result);
+      result = service.getActionResult();
       if (isTrue(result)) {
         setRedirect(objectName + ":showOne");
-        addRedirectParameter(primaryName, result.get(primaryName));
+        setRedirectParameter(primaryName, result.get(primaryName));
       } else {
         render.setActionResult(result);
         render.renderAddEntityForm();
         setHtml(render.getRenderResult());
       }
     }
+    return result;
   }
 
-  public void change() {
+  public ActionResult change() {
+    ActionResult result = null;
     String specAction = MyString.getString(request.get("specAction"));
     if (specAction.equals(defaultSpecAction)) {
       render.renderChangeEntityForm();
@@ -77,52 +79,55 @@ public class StandartWebController extends AbstractWebController {
     } else if (specAction.equals("change")) {
       service.setRequest(request);
       service.updateModel();
-      ActionResult result = service.getActionResult();
-      setActionResult(result);
+      result = service.getActionResult();
       if (isTrue(result)) {
         setRedirect(objectName + ":showOne");
-        addRedirectParameter(primaryName, result.get(primaryName));
+        setRedirectParameter(primaryName, result.get(primaryName));
       } else {
         render.setActionResult(result);
         render.renderChangeEntityForm();
         setHtml(render.getRenderResult());
       }
     }
+    return result;
   }
 
-  public void delete() {
+  public ActionResult delete() {
     String specAction = MyString.getString(request.get("specAction"));
+    ActionResult result = null;
     if (specAction.equals(defaultSpecAction)) {
       service.closeModel();
-      ActionResult result = service.getActionResult();
-      setActionResult(result);
+      result = service.getActionResult();
       setRedirect(objectName + ":showOne");
-      addRedirectParameter(primaryName, result.get(primaryName));
+      setRedirectParameter(primaryName, result.get(primaryName));
     }
+    return result;
   }
   
-  public void search() {
+  public ActionResult search() {
     String specAction = MyString.getString(request.get("specAction"));
+    ActionResult result = null;
     if (specAction.equals(defaultSpecAction)) {
       service.findActive();
-      ActionResult result = service.getActionResult();
-      setActionResult(result);
+      result = service.getActionResult();
       render.setActionResult(result);
       render.renderEntityList();
       setHtml(render.getRenderResult());
     }
+    return result;
   }
   
-  public void showOne() {
+  public ActionResult showOne() {
     String specAction = MyString.getString(request.get("specAction"));
+    ActionResult result = null;
     if (specAction.equals(defaultSpecAction)) {
       service.searchById();
-      ActionResult result = service.getActionResult();
-      setActionResult(result);
+      result = service.getActionResult();
       render.setActionResult(result);
       render.renderOneEntity();
       setHtml(render.getRenderResult());
     }
+    return result;
   }
 
   private boolean isTrue(ActionResult result) {

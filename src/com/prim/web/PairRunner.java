@@ -307,11 +307,17 @@ public class PairRunner {
             newRequest.put("specAction", spec);
             newRequest.putAll(innerRequest);
             WebController cnt = (WebController) constructor.newInstance(newRequest, innerSession, fileList, app);
+            cnt.startTransaction();
             // выполнить 
             Method method = cnt.getClass().getMethod(methodName);
-            method.invoke(cnt);
+            ActionResult result = (ActionResult) method.invoke(cnt);
+            if (result == null) {
+              result = ActionResultPrim.getInstance();
+            }
+            actionResult = result;
             // присвоить параметры
-            actionResult = cnt.getActionResult();
+            boolean cntStatus = result.getStatus().equals(StatusCodes.TRUE);
+            cnt.endTransaction(cntStatus);
             if (cnt.makeRedirect()) {
               setRedirect(cnt.getRedirect());
               stringRedirectParams = cnt.getRedirectParamsToString();

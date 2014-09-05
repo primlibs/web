@@ -10,6 +10,8 @@ import com.prim.core.AbstractApplication;
 import com.prim.core.UploadedFile;
 import com.prim.core.controller.ActionResult;
 import com.prim.core.controller.ActionResultPrim;
+import com.prim.core.controller.StatusCodes;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,7 +27,6 @@ public abstract class AbstractWebController implements WebController {
   protected Map<String, Object> session = new HashMap();
   protected List<UploadedFile> fileList = new ArrayList();
   protected AbstractApplication app;
-  private ActionResult actionResult = ActionResultPrim.getInstance();
   
 
   
@@ -52,6 +53,19 @@ public abstract class AbstractWebController implements WebController {
       this.fileList.add(file);
     }
     this.app = app;
+  }
+  
+  public final void startTransaction() throws SQLException {
+    app.getConnection().setAutoCommit(false);
+  }
+  
+  public final void endTransaction(boolean status) throws SQLException {
+    if (status) {
+      app.getConnection().commit();
+    } else {
+      app.getConnection().rollback();
+    }
+    app.getConnection().setAutoCommit(true);
   }
   
   public final Map<String, Object> getRequest() {
@@ -105,16 +119,10 @@ public abstract class AbstractWebController implements WebController {
     return str;
   }
   
-  protected final void addRedirectParameter(String key, Object value) {
+  protected final void setRedirectParameter(String key, Object value) {
     redirectParams.put(key, value);
   }
 
-  public final ActionResult getActionResult() {
-    return actionResult;
-  }
 
-  protected final void setActionResult(ActionResult actionResult) {
-    this.actionResult = actionResult;
-  }
   
 }
