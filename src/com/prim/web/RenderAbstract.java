@@ -35,8 +35,8 @@ abstract public class RenderAbstract implements Render{
 
   
   public RenderAbstract() {
-    aR.setStatus(false);
-    aR.addError("Ar is not created");
+    //aR.setStatus(false);
+    //aR.addError("Ar is not created");
   }
 
   @Override
