@@ -35,9 +35,22 @@ public abstract class AbstractWebController implements WebController {
   private Map<String, Object> redirectParams = new HashMap();
 
   public AbstractWebController(Map<String, Object> request, Map<String, Object> session, List<UploadedFile> fileList, AbstractApplication app) throws Exception {
+    /*
     this.request = request;
     this.session = session;
     this.fileList = fileList;
+    */
+    for (String key: request.keySet()) {
+      Object value = request.get(key);
+      this.request.put(key, value);
+    }
+    for (String key: session.keySet()) {
+      Object value = session.get(key);
+      this.session.put(key, value);
+    }
+    for (UploadedFile file: fileList) {
+      this.fileList.add(file);
+    }
     this.app = app;
   }
   
