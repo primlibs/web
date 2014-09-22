@@ -64,7 +64,7 @@ public interface Render {
 
   public RightsObject getRightsObject();
 
-  public void setApplication(AbstractApplication app) throws Exception;
+  public void setApplication(AbstractApplication app);
 
   public AbsEnt img(String img, String width, String height, String style) throws Exception;
 

@@ -95,7 +95,7 @@ abstract public class RenderAbstract implements Render{
   }
 
   @Override
-  final public void setApplication(AbstractApplication app) throws Exception {
+  final public void setApplication(AbstractApplication app) {
     if (app != null) {
       this.app = app;
       this.rightsObject = app.getRightsObject();

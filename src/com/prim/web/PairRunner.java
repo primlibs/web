@@ -299,7 +299,7 @@ public class PairRunner {
           if (classExists(fullClassName)) {
             Class cl = Class.forName(fullClassName);
             Constructor constructor = cl.getConstructor(Map.class, Map.class, List.class, AbstractApplication.class);
-            Map<String, Object> newRequest = new HashMap();            
+            Map<String, Object> newRequest = new HashMap();
             String spec = specialAction.trim();
             if (spec.equals("default")) {
               spec = "";
@@ -309,14 +309,18 @@ public class PairRunner {
             WebController cnt = (WebController) constructor.newInstance(newRequest, innerSession, fileList, app);
             cnt.startTransaction();
             // выполнить 
-            Method method = cnt.getClass().getMethod(methodName);
-            ActionResult result = (ActionResult) method.invoke(cnt);
-            if (result == null) {
-              result = ActionResultPrim.getInstance();
+            try {
+              Method method = cnt.getClass().getMethod(methodName);
+              actionResult = (ActionResult) method.invoke(cnt);
+              if (actionResult == null) {
+                actionResult = ActionResultPrim.getInstance();
+              }
+            } catch (Exception e) {
+              actionResult = ActionResultPrim.getInstance();
+              actionResult.setStatusCode(StatusCodes.BIZ);
             }
-            actionResult = result;
             // присвоить параметры
-            boolean cntStatus = result.getStatus().equals(StatusCodes.TRUE);
+            boolean cntStatus = actionResult.getStatus().equals(StatusCodes.TRUE);
             cnt.endTransaction(cntStatus);
             if (cnt.makeRedirect()) {
               setRedirect(cnt.getRedirect());
@@ -378,11 +382,14 @@ public class PairRunner {
 
       try {
         Class cl;
-        cl = Class.forName(app.getRenderClassPath() + "." + str[0]);
+        cl = Class.forName(app.getRenderClassPath() + "." + str[0]);        
         wr = (Render) cl.newInstance();
       } catch (Exception ez) {
         throw new Exception(str[0] + str[1] + MyString.getStackExeption(ez));
       }
+      
+      
+      
       // передать параметры
       wr.setRequest(innerRequest);
       wr.setSession(innerSession);

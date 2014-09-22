@@ -11,6 +11,8 @@ import com.prim.core.UploadedFile;
 import com.prim.core.controller.ActionResult;
 import com.prim.core.controller.ActionResultPrim;
 import com.prim.core.controller.StatusCodes;
+import com.prim.core.service.Service;
+import com.prim.web.Render;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -58,7 +60,7 @@ public abstract class AbstractWebController implements WebController {
   public final void startTransaction() throws SQLException {
     app.getConnection().setAutoCommit(false);
   }
-  
+    
   public final void endTransaction(boolean status) throws SQLException {
     if (status) {
       app.getConnection().commit();
@@ -123,6 +125,19 @@ public abstract class AbstractWebController implements WebController {
     redirectParams.put(key, value);
   }
 
-
+  protected void initRender(Render render, AbstractApplication app, Map<String, Object> request) {
+    render.setApplication(app);
+    render.setRequest(request);
+  }
+  
+  protected void initRender(Render render, AbstractApplication app, Map<String, Object> request, ActionResult result) {
+    render.setApplication(app);
+    render.setRequest(request);
+    render.setActionResult(result);
+  }
+  
+  protected void initService(Service service, Map<String, Object> request) {
+    service.setRequest(request);
+  }
   
 }
