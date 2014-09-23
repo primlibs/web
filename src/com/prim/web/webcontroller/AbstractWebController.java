@@ -27,17 +27,17 @@ import java.util.Map;
  */
 public abstract class AbstractWebController implements WebController {
   
-  protected Map<String, Object> request = new HashMap();
-  protected Map<String, Object> session = new HashMap();
-  protected List<UploadedFile> fileList = new ArrayList();
-  protected AbstractApplication app;
+  private final Map<String, Object> request = new HashMap();
+  private final Map<String, Object> session = new HashMap();
+  private final List<UploadedFile> fileList = new ArrayList();
+  private final AbstractApplication app;
   
 
   
   private String html;
   private boolean makeRedirect = false;
   private String redirect;
-  private Map<String, Object> redirectParams = new HashMap();
+  private final Map<String, Object> redirectParams = new HashMap();
 
   /**
    * 
@@ -84,20 +84,38 @@ public abstract class AbstractWebController implements WebController {
   
   @Override
   public final Map<String, Object> getRequest() {
-    return request;
+    Map<String, Object> newReq = new HashMap();
+    for (String key: request.keySet()) {
+      Object value = request.get(key);
+      newReq.put(key, value);
+    }
+    return newReq;
   }
 
 
 
   @Override
   public final Map<String, Object> getSession() {
-    return session;
+    Map<String, Object> newSession = new HashMap();
+    for (String key: session.keySet()) {
+      Object value = session.get(key);
+      newSession.put(key, value);
+    }
+    return newSession;
   }
 
 
   @Override
   public final List<UploadedFile> getFileList() {
-    return fileList;
+    List<UploadedFile> newList = new ArrayList();
+    for (UploadedFile file: fileList) {
+      newList.add(file);
+    }
+    return newList;
+  }
+
+  public AbstractApplication getApp() {
+    return app;
   }
 
 
@@ -146,6 +164,8 @@ public abstract class AbstractWebController implements WebController {
     }
     return str;
   }
+  
+  
   
   /**
    * установить параметр для редиректа
