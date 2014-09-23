@@ -8,6 +8,7 @@ import com.prim.core.AbstractApplication;
 import com.prim.core.controller.ActionResult;
 import com.prim.core.controller.ActionResultPrim;
 import com.prim.core.controller.RightsObject;
+import com.prim.web.fabric.AbsEnt;
 import com.prim.web.fabric.AbstractWebFabric;
 import com.prim.web.fabric.BaseFabric;
 import java.util.HashMap;
@@ -100,6 +101,10 @@ abstract public class RenderAbstract implements Render{
       this.app = app;
       this.rightsObject = app.getRightsObject();
     }
+  }
+  
+  final public AbsEnt getEnt(String name) throws Exception {
+    return getFabric().get(name);
   }
 
   @Override

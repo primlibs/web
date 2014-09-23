@@ -86,6 +86,8 @@ public final class FabricRender extends RenderAbstract implements Render {
     ae.setAttribute(EnumAttrType.style, style);
     return ae;
   }
+  
+  
 
   /**
    * получить картинку по переданному контенту в виде строки

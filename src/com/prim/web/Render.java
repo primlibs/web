@@ -451,4 +451,8 @@ public interface Render {
    * @throws Exception
    */
   public AbsEnt combo(String service, String method, String methodForDefault, Object value, String name) throws Exception;
+  
+  
+  public AbsEnt getEnt(String name) throws Exception;
+  
 }
