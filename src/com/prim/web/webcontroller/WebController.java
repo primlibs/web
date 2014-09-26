@@ -19,7 +19,7 @@ import java.util.Set;
  */
 public interface WebController {
 
-    public static String[] internalMethods = {"getRequest", "getSession", "getFileList", "getHtml", "makeRedirect", "getRedirectParamsToString"
+    public static String[] internalMethods = {"getApp", "getRequest", "getSession", "getFileList", "getHtml", "makeRedirect", "getRedirectParamsToString"
     , "getRedirect", "getActionResult", "wait", "toString", "equals", "getClass", "hashCode", "notify", "notifyAll", "startTransaction", "endTransaction"};
     
     
