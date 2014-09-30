@@ -12,6 +12,7 @@ import com.prim.core.controller.ActionResult;
 import com.prim.core.controller.ActionResultPrim;
 import com.prim.core.controller.StatusCodes;
 import com.prim.core.service.Service;
+import com.prim.support.MyString;
 import com.prim.web.Render;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -32,7 +33,7 @@ public abstract class AbstractWebController implements WebController {
   private final List<UploadedFile> fileList = new ArrayList();
   private final AbstractApplication app;
   
-
+  protected final String defaultSpecAction = "";
   
   private String html;
   private boolean makeRedirect = false;
@@ -71,6 +72,8 @@ public abstract class AbstractWebController implements WebController {
   public final void startTransaction() throws SQLException {
     app.getConnection().setAutoCommit(false);
   }
+  
+  
     
   @Override
   public final void endTransaction(boolean status) throws SQLException {
@@ -207,6 +210,14 @@ public abstract class AbstractWebController implements WebController {
    */
   protected void initService(Service service, Map<String, Object> request) {
     service.setRequest(request);
+  }
+  
+  protected String getSpecAction() {
+    return MyString.getString(getRequest().get("specAction"));
+  }
+  
+  protected boolean isTrue(ActionResult result) {
+    return result.getStatus().equals(StatusCodes.TRUE);
   }
   
 }
