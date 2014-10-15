@@ -48,6 +48,12 @@ public class AbsEntAbstract implements AbsEnt {
   }
 
   @Override
+  public final AbsEnt setAttribute(String name, String value) {
+    data.setAttribute(name, value);
+    return this;
+  }
+  
+  @Override
   public final AbsEnt setAttribute(EnumAttrType type, String value) {
     data.setAttribute(type, value);
     return this;

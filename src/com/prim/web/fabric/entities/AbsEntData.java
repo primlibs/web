@@ -4,15 +4,17 @@
  */
 package com.prim.web.fabric.entities;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.EnumMap;
-import java.util.List;
 import com.prim.support.MyString;
 import com.prim.web.fabric.AbsEnt;
 import com.prim.web.fabric.EnumAttrNoValue;
 import com.prim.web.fabric.EnumAttrType;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.EnumMap;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -28,7 +30,13 @@ final class AbsEntData {
   String javascript = "";
   List<EnumAttrNoValue> singleAttributes = new ArrayList<EnumAttrNoValue>();
   String forId=null;
+  
+  Map<String, Object> freeAttributes = new HashMap();
 
+  public final void setAttribute(String name, String value) {
+    freeAttributes.put(name, value);
+  }
+  
   private AbsEntData(EnumAttrType... types) {
     accessAttrTypes.addAll(Arrays.asList(types));
   }
@@ -121,6 +129,9 @@ final class AbsEntData {
     }
     if (!css.equals("")) {
         result += "class=\"" + css + "\"";
+    }
+    for (String name: freeAttributes.keySet()) {
+      result += name + "=\"" + freeAttributes.get(name) + "\"";
     }
     result += " ";
     return result;
