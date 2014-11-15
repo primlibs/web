@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import org.apache.commons.codec.binary.Base64;
 
 /**
  *
@@ -368,6 +369,7 @@ public final class FabricRender extends RenderAbstract implements Render {
     }
     return combo(map, value, name);
   }
+
 
   @Override
   public AbsEnt combo(String service, String method, String serviceForDefault, String methodForDefault, Object value, String name, boolean mandatory)
@@ -1250,6 +1252,8 @@ public final class FabricRender extends RenderAbstract implements Render {
     return HrefOption.getInstance();
   }
 
+  
+  
   @Override
   public AbsEnt getImgByContent(String content, String width, String height, String style) throws Exception {
     return img("data:image/gif;base64," + content, width, height, style);
@@ -1260,5 +1264,11 @@ public final class FabricRender extends RenderAbstract implements Render {
     AbsEnt ent = getFabric().get("NotEscapeText");
     ent.setValue(html);
     return ent;
+  }
+
+  @Override
+  public AbsEnt imgByBytes(byte[] bytes, String width, String height, String style) throws Exception {
+    String encodeContent = Base64.encodeBase64String(bytes);
+    return getImgByContent(encodeContent, width, height, style);
   }
 }

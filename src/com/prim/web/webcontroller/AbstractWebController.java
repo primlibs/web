@@ -208,8 +208,14 @@ public abstract class AbstractWebController implements WebController {
    * @param service сервис
    * @param request параметры запроса
    */
+  @Deprecated
   protected void initService(Service service, Map<String, Object> request) {
     service.setRequest(request);
+  }
+  
+   protected void initService(Service service) {
+    service.setRequest(getRequest());
+    service.setFileList(getFileList());
   }
   
   protected String getSpecAction() {

@@ -452,7 +452,8 @@ public interface Render {
    */
   public AbsEnt combo(String service, String method, String methodForDefault, Object value, String name) throws Exception;
   
-  
   public AbsEnt getEnt(String name) throws Exception;
+  
+  public AbsEnt imgByBytes(byte[] bytes,  String width, String height, String style) throws Exception;
   
 }
