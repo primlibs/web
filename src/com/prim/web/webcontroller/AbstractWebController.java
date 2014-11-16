@@ -197,9 +197,16 @@ public abstract class AbstractWebController implements WebController {
    * @param request параметры запроса
    * @param result объект ActionResult
    */
+  @Deprecated
   protected void initRender(Render render, AbstractApplication app, Map<String, Object> request, ActionResult result) {
     render.setApplication(app);
     render.setRequest(request);
+    render.setActionResult(result);
+  }
+  
+  protected void initRender(Render render, ActionResult result) {
+    render.setApplication(getApp());
+    render.setRequest(getRequest());
     render.setActionResult(result);
   }
   
@@ -213,10 +220,12 @@ public abstract class AbstractWebController implements WebController {
     service.setRequest(request);
   }
   
-   protected void initService(Service service) {
+  protected void initService(Service service) {
     service.setRequest(getRequest());
     service.setFileList(getFileList());
   }
+   
+   
   
   protected String getSpecAction() {
     return MyString.getString(getRequest().get("specAction"));
