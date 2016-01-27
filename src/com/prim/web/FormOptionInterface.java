@@ -12,11 +12,12 @@ import java.util.Map;
  *
  * @author кот
  */
-public interface FormOptionInterface {
+public interface FormOptionInterface { 
   /*
    * устанавливает тип формы горизонтальная. - вертикальная
    */
 
+    
   public void setHorisontal(Boolean horizontal);
 
   /*
@@ -80,7 +81,11 @@ public interface FormOptionInterface {
    * расположение кнопки в начале формы
    * @param place 
    */
-  public void setPlaceButtonAtBegin(Boolean place);
+  @Deprecated
+  public void  setPlaceButtonAtBegin(Boolean place);
+  
+  public void setButtonPlase(ButtonPlace place);
+  
   
   /**
    * расположение кнопки в начале формы
@@ -88,6 +93,12 @@ public interface FormOptionInterface {
    */
    public Boolean isPlaceButtonAtBegin();
 
+   /**
+   * расположение кнопки в начале формы
+   * @return 
+   */
+   public Boolean isPlaceButtonAtEnd();
+   
   
   /*
    * Устанавливает название кнопки
@@ -183,4 +194,6 @@ public interface FormOptionInterface {
    * возвращает тип обработчика по onclick
    */
   public String getJshandler();
+  
+  public ButtonPlace getButtonPlace();
 }

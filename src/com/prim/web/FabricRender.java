@@ -1049,7 +1049,7 @@ public final class FabricRender extends RenderAbstract implements Render {
       }
     }
 
-    if (!fo.isPlaceButtonAtBegin()) {
+    if (fo.isPlaceButtonAtEnd()) {
       tr.addEnt(buttonTd);
     }
 
